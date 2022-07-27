@@ -11,11 +11,4 @@ public class BusinessException extends RuntimeException {
     private final HttpStatus httpStatus;
     private final String message;
 
-    public BusinessException(String message, HttpStatus httpStatus) {
-        super(message);
-        this.httpStatus = httpStatus;
-        this.message = message;
-    }
-
-
 }
