@@ -21,13 +21,13 @@
 ### Clone project in Github
 > git clone https://github.com/gabrieldevsantos/pismo-test
 
-###Run locally
+### Run locally
 ```SHELL
 > mvn clean install
 > mvn spring-boot:run
 ```
 
-###Run with Docker
+### Run with Docker
 ```SHELL
 > mvn clean install
 > docker build -t app .
