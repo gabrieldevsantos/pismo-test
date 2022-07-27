@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OperationTypeRepository extends JpaRepository<OperationTypeEntity, Integer> {
 
-
 }
