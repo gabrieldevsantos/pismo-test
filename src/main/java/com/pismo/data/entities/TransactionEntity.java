@@ -40,7 +40,7 @@ public class TransactionEntity {
         return TransactionEntity.builder()
             .account(AccountEntity.builder().id(transaction.getAccountId()).build())
             .operationType(new OperationTypeEntity(transaction.getOperationType().getCode()))
-            .amount(transaction.isNotPayment() ? transaction.getAmount().negate() : transaction.getAmount())
+            .amount(transaction.getOperationType().getAmountByOperationType().apply(transaction.getAmount()))
             .build();
     }
 

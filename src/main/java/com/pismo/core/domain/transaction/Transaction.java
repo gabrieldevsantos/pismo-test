@@ -18,8 +18,4 @@ public class Transaction {
         this.operationType = operationType;
         this.amount = amount;
     }
-
-    public boolean isNotPayment() {
-        return !OperationType.PAYMENT.equals(this.operationType);
-    }
 }
