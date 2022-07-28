@@ -67,7 +67,7 @@ class AccountControllerRestTest {
 
     @Test
     void shouldThrowException_DuplicatedUser() throws Exception {
-        final AccountEntity accountEntity = new AccountEntity("12345678910");
+        final AccountEntity accountEntity = AccountEntity.of("12345678910");
         accountRepository.save(accountEntity);
 
         final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345678910");
@@ -81,7 +81,7 @@ class AccountControllerRestTest {
 
     @Test
     void shouldRetrieveAccountWithSuccess() throws Exception {
-        final AccountEntity accountEntity = new AccountEntity("12345678910");
+        final AccountEntity accountEntity = AccountEntity.of("12345678910");
         final AccountEntity accountSaved = accountRepository.save(accountEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts/" + accountSaved.getId())

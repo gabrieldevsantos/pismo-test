@@ -27,7 +27,10 @@ public class AccountEntity {
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "account")
     private List<TransactionEntity> transactions;
 
-    public AccountEntity(String documentNumber) {
+    public static AccountEntity of(final String documentNumber) {
+        return new AccountEntity(documentNumber);
+    }
+    private AccountEntity(String documentNumber) {
         this.documentNumber = documentNumber;
     }
 

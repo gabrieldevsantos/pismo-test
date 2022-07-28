@@ -19,7 +19,11 @@ public class Account {
     private final String documentNumber;
     private final List<Transaction> transactions;
 
-    public Account(Long accountId, String documentNumber) {
+    public static Account of(final Long accountId, final String documentNumber) {
+        return new Account(accountId, documentNumber);
+    }
+
+    private Account(Long accountId, String documentNumber) {
         this.accountId = accountId;
         this.documentNumber = documentNumber;
         this.transactions = new ArrayList<>();

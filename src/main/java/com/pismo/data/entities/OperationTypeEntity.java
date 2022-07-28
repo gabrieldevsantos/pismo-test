@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-@Entity(name = "OPERATION_TYPE_ENTITY")
+@Entity(name = "OPERATION_TYPE")
 public class OperationTypeEntity {
 
     @Id

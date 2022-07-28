@@ -30,7 +30,7 @@ public class AccountController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{accountId}")
     public AccountResponseDTO get(@PathVariable Long accountId) {
-        final Account account = this.findAccountByIdUseCase.doExecute(accountId);
+        final var account = this.findAccountByIdUseCase.doExecute(accountId);
         return toDto(account);
     }
 }
