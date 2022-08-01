@@ -22,8 +22,8 @@ public class TransactionEntity {
     @Column(name = "id", updatable = false, unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "account", updatable = false, nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
     private AccountEntity account;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -42,13 +42,6 @@ public class TransactionEntity {
             .operationType(new OperationTypeEntity(transaction.getOperationType().getCode()))
             .amount(transaction.getOperationType().getAmountByOperationType().apply(transaction.getAmount()))
             .build();
-    }
-
-    public Transaction toDomain(TransactionEntity transactionEntity) {
-        return new Transaction(transactionEntity.getId(),
-            transactionEntity.getAccount().getId(),
-            OperationType.getOperationByCode(transactionEntity.getOperationType().getId()),
-            transactionEntity.getAmount());
     }
 
     public Transaction toDomain() {

@@ -32,7 +32,7 @@ class CreateAccountUseCaseTest {
         Mockito.when(accountRepository.existsAccountEntitiesByDocumentNumber(Mockito.anyString())).thenReturn(Boolean.FALSE);
         Mockito.when(accountRepository.save(Mockito.any())).thenReturn(mockAccountEntity());
 
-        final Account account = new Account(null, "19091312025", null);
+        final Account account = Account.of(null, "19091312025");
         final Account accountSaved = createAccountUseCase.doExecute(account);
 
         Assertions.assertAll(() -> {
@@ -47,7 +47,7 @@ class CreateAccountUseCaseTest {
     void throwException_duplicateAccountNumber() {
         Mockito.when(accountRepository.existsAccountEntitiesByDocumentNumber(Mockito.anyString())).thenReturn(Boolean.TRUE);
 
-        final Account account = new Account(null, "19091312025", null);
+        final Account account = Account.of(null, "19091312025");
         Assertions.assertThrows(UnprocessableEntityException.class, () -> createAccountUseCase.doExecute(account));
     }
 

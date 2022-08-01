@@ -53,7 +53,6 @@ class FindAccountByIdUseCaseTest {
         return AccountEntity.builder()
             .id(1L)
             .documentNumber("19091312025")
-            .transactions(List.of())
             .build();
     }
 

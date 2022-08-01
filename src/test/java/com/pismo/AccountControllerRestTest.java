@@ -5,6 +5,7 @@ import com.pismo.api.dto.account.AccountRequestDTO;
 import com.pismo.api.dto.account.AccountResponseDTO;
 import com.pismo.data.entities.AccountEntity;
 import com.pismo.data.repository.AccountRepository;
+import com.pismo.data.repository.TransactionRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,12 @@ class AccountControllerRestTest {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
     @BeforeEach
     void setUp() {
+        this.transactionRepository.deleteAll();
         this.accountRepository.deleteAll();
     }
 
