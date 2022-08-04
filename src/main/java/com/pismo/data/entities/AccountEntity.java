@@ -4,9 +4,9 @@ import com.pismo.core.domain.account.Account;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Entity(name = "ACCOUNT")
@@ -21,15 +21,24 @@ public class AccountEntity {
     @Column(name = "document_number", updatable = false, unique = true, nullable = false)
     private String documentNumber;
 
-    public static AccountEntity of(final String documentNumber) {
-        return new AccountEntity(documentNumber);
+    @Column(name = "available_limit")
+    private BigDecimal availableLimit;
+
+    public static AccountEntity of(final Long id, final String documentNumber, final BigDecimal availableLimit) {
+        return new AccountEntity(id, documentNumber, availableLimit);
     }
 
-    private AccountEntity(String documentNumber) {
+    public static AccountEntity of(final String documentNumber, final BigDecimal availableLimit) {
+        return new AccountEntity(null, documentNumber, availableLimit);
+    }
+
+    private AccountEntity(Long id, String documentNumber, BigDecimal availableLimit) {
+        this.id = id;
         this.documentNumber = documentNumber;
+        this.availableLimit = availableLimit;
     }
 
     public Account toDomain() {
-        return Account.of(this.id, this.getDocumentNumber());
+        return Account.of(this.id, this.getDocumentNumber(), this.availableLimit);
     }
 }

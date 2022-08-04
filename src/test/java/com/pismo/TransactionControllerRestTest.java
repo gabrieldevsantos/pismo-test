@@ -51,7 +51,7 @@ class TransactionControllerRestTest {
     @Test
     void shouldCreateNewTransaction_buyOperation() throws Exception {
         //create user
-        final AccountEntity accountSaved = this.accountRepository.save(AccountEntity.of("12345678910"));
+        final AccountEntity accountSaved = this.accountRepository.save(AccountEntity.of("12345678910", BigDecimal.TEN));
 
         final TransactionRequestDTO transactionRequestDTO = new TransactionRequestDTO(accountSaved.getId(), 1, new BigDecimal("10"));
 
@@ -73,7 +73,7 @@ class TransactionControllerRestTest {
     @Test
     void shouldCreateNewTransaction_paymentOperation() throws Exception {
         //create user
-        final AccountEntity accountSaved = this.accountRepository.save(AccountEntity.of("12345678910"));
+        final AccountEntity accountSaved = this.accountRepository.save(AccountEntity.of("12345678910", BigDecimal.TEN));
 
         final TransactionRequestDTO transactionRequestDTO = new TransactionRequestDTO(accountSaved.getId(), 4, new BigDecimal("25"));
 

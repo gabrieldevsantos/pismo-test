@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @SpringBootTest
@@ -44,7 +45,7 @@ class AccountControllerRestTest {
 
     @Test
     void shouldCreateAccountWithSuccess() throws Exception {
-        final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345678910");
+        final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345678910", BigDecimal.TEN);
 
         final MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
             .contentType(MediaType.APPLICATION_JSON)
@@ -61,7 +62,7 @@ class AccountControllerRestTest {
 
     @Test
     void shouldThrowException_InvalidDocumentNumber() throws Exception {
-        final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345");
+        final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345", BigDecimal.TEN);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
             .contentType(MediaType.APPLICATION_JSON)
@@ -72,10 +73,10 @@ class AccountControllerRestTest {
 
     @Test
     void shouldThrowException_DuplicatedUser() throws Exception {
-        final AccountEntity accountEntity = AccountEntity.of("12345678910");
+        final AccountEntity accountEntity = AccountEntity.of("12345678910", BigDecimal.TEN);
         accountRepository.save(accountEntity);
 
-        final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345678910");
+        final AccountRequestDTO accountRequestDTO = new AccountRequestDTO("12345678910", BigDecimal.TEN);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
             .contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +87,7 @@ class AccountControllerRestTest {
 
     @Test
     void shouldRetrieveAccountWithSuccess() throws Exception {
-        final AccountEntity accountEntity = AccountEntity.of("12345678910");
+        final AccountEntity accountEntity = AccountEntity.of("12345678910", BigDecimal.TEN);
         final AccountEntity accountSaved = accountRepository.save(accountEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/accounts/" + accountSaved.getId())

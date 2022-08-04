@@ -18,8 +18,8 @@ public class CreateAccountUseCase {
             throw new UnprocessableEntityException("Already exists account with this document number");
         }
 
-        final var accountSaved = this.accountRepository.save(AccountEntity.of(account.getDocumentNumber()));
-        return Account.of(accountSaved.getId(), accountSaved.getDocumentNumber());
+        final var accountSaved = this.accountRepository.save(AccountEntity.of(account.getDocumentNumber(), account.getAvailableLimit()));
+        return Account.of(accountSaved.getId(), accountSaved.getDocumentNumber(), accountSaved.getAvailableLimit());
     }
 
 }

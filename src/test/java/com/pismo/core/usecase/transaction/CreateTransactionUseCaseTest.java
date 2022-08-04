@@ -1,9 +1,12 @@
 package com.pismo.core.usecase.transaction;
 
+import com.pismo.core.domain.account.Account;
 import com.pismo.core.domain.transaction.OperationType;
 import com.pismo.core.domain.transaction.Transaction;
 import com.pismo.core.exceptions.NotFoundException;
 import com.pismo.core.exceptions.UnprocessableEntityException;
+import com.pismo.core.usecase.account.FindAccountByIdUseCase;
+import com.pismo.core.usecase.account.UpdateAvailableLimitUseCase;
 import com.pismo.data.entities.AccountEntity;
 import com.pismo.data.entities.OperationTypeEntity;
 import com.pismo.data.entities.TransactionEntity;
@@ -25,7 +28,7 @@ import java.math.BigDecimal;
 class CreateTransactionUseCaseTest {
 
     @Mock
-    private AccountRepository accountRepository;
+    private FindAccountByIdUseCase findAccountByIdUseCase;
 
     @Mock
     private OperationTypeRepository operationTypeRepository;
@@ -33,17 +36,21 @@ class CreateTransactionUseCaseTest {
     @Mock
     private TransactionRepository transactionRepository;
 
+    @Mock
+    private UpdateAvailableLimitUseCase updateAvailableLimitUseCase;
+
     private CreateTransactionUseCase createTransactionUseCase;
 
     @BeforeEach
     void setUp() {
-        createTransactionUseCase = new CreateTransactionUseCase(accountRepository, operationTypeRepository, transactionRepository);
+        createTransactionUseCase = new CreateTransactionUseCase(findAccountByIdUseCase, operationTypeRepository, transactionRepository, updateAvailableLimitUseCase);
     }
 
     @Test
     void mustCreateTransactionWithSuccess() {
+        final Account account = Account.of(null, "19091312025", BigDecimal.TEN);
         Mockito.when(operationTypeRepository.existsById(Mockito.anyInt())).thenReturn(Boolean.TRUE);
-        Mockito.when(accountRepository.existsById(Mockito.anyLong())).thenReturn(Boolean.TRUE);
+        Mockito.when(findAccountByIdUseCase.doExecute(Mockito.anyLong())).thenReturn(account);
         Mockito.when(transactionRepository.save(Mockito.any())).thenReturn(mockTransactionEntity());
 
         final Transaction transaction = new Transaction(null, 123456L, OperationType.BUY_AT_CASH, new BigDecimal(10));
@@ -70,7 +77,7 @@ class CreateTransactionUseCaseTest {
 
     @Test
     void throwException_notFoundAccount() {
-        Mockito.when(accountRepository.existsById(Mockito.anyLong())).thenReturn(Boolean.FALSE);
+        Mockito.when(findAccountByIdUseCase.doExecute(Mockito.anyLong())).thenThrow(NotFoundException.class);
         Mockito.when(operationTypeRepository.existsById(Mockito.anyInt())).thenReturn(Boolean.TRUE);
 
         final Transaction transaction = new Transaction(null, 123456L, OperationType.BUY_AT_CASH, new BigDecimal(10));

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
@@ -21,8 +22,11 @@ public class AccountRequestDTO {
     @JsonProperty("document_number")
     private String documentNumber;
 
+    @JsonProperty("available_limit")
+    private BigDecimal availableLimit;
+
     public Account toDomain(){
-        return Account.of(null, documentNumber);
+        return Account.of(null, documentNumber, availableLimit);
     }
 
 }

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +19,11 @@ public class AccountResponseDTO {
     @JsonProperty("document_number")
     private String documentNumber;
 
+    @JsonProperty("available_limit")
+    private BigDecimal availableLimit;
+
     public static AccountResponseDTO toDto(final Account account) {
-        return new AccountResponseDTO(account.getAccountId(), account.getDocumentNumber());
+        return new AccountResponseDTO(account.getAccountId(), account.getDocumentNumber(), account.getAvailableLimit());
     }
 
 }

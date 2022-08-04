@@ -14,6 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+
 @ExtendWith(MockitoExtension.class)
 class CreateAccountUseCaseTest {
 
@@ -32,7 +34,7 @@ class CreateAccountUseCaseTest {
         Mockito.when(accountRepository.existsAccountEntitiesByDocumentNumber(Mockito.anyString())).thenReturn(Boolean.FALSE);
         Mockito.when(accountRepository.save(Mockito.any())).thenReturn(mockAccountEntity());
 
-        final Account account = Account.of(null, "19091312025");
+        final Account account = Account.of(null, "19091312025", BigDecimal.TEN);
         final Account accountSaved = createAccountUseCase.doExecute(account);
 
         Assertions.assertAll(() -> {
@@ -47,7 +49,7 @@ class CreateAccountUseCaseTest {
     void throwException_duplicateAccountNumber() {
         Mockito.when(accountRepository.existsAccountEntitiesByDocumentNumber(Mockito.anyString())).thenReturn(Boolean.TRUE);
 
-        final Account account = Account.of(null, "19091312025");
+        final Account account = Account.of(null, "19091312025", BigDecimal.TEN);
         Assertions.assertThrows(UnprocessableEntityException.class, () -> createAccountUseCase.doExecute(account));
     }
 
